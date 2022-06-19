@@ -51,6 +51,9 @@ public class EconomyMod implements ModInitializer {
 	}
 
 	public void registerCommands() {
+		new MoneyCommand();
+		new PayCommand();
+		new WalletCommand();
 	}
 
 	public void registerLazyTick() {
