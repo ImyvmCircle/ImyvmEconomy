@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "imyvm_economy",
+  "version": "${version}",
+
+  "name": "Imyvm Economy",
+  "description": "",
+  "authors": [
+    "YanWQ-monad"
+  ],
+  "contact": {
+    "sources": "https://github.com/..."
+  },
+
+  "license": "",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.imyvm.economy.EconomyMod"
+    ]
+  },
+  "mixins": [
+    "economy.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  }
+}
