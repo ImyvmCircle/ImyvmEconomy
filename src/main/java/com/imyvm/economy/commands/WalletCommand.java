@@ -11,6 +11,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,7 +23,7 @@ public class WalletCommand extends BaseCommand {
     protected void registerCommand(CommandDispatcher<Object> dispatcher) {
         dispatcher.register(
             LiteralArgumentBuilder.literal("wallet")
-                .requires(source -> ((ServerCommandSource) source).hasPermissionLevel(2))
+                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".wallet", 2))
                 .then(LiteralArgumentBuilder.literal("add")
                     .then(RequiredArgumentBuilder.argument("player", EntityArgumentType.player())
                         .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))

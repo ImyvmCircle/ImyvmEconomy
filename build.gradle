@@ -16,6 +16,9 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		url 'https://oss.sonatype.org/content/repositories/snapshots'
+	}
 }
 
 dependencies {
@@ -29,6 +32,7 @@ dependencies {
 
 	modImplementation "com.mojang:brigadier:${project.brigadier_version}"
 	implementation include("com.typesafe:config:${project.typesafe_version}")
+	modImplementation "me.lucko:fabric-permissions-api:${project.fabric_permissions_api_version}"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

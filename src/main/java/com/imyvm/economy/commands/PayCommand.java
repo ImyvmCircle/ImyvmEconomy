@@ -10,6 +10,7 @@ import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,6 +21,7 @@ public class PayCommand extends BaseCommand {
         dispatcher.register(
             LiteralArgumentBuilder.literal("pay")
                 .requires(source -> ((ServerCommandSource) source).isExecutedByPlayer())
+                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".pay"))
                 .then(RequiredArgumentBuilder.argument("target", EntityArgumentType.player())
                     .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))
                         .executes(ctx -> {
