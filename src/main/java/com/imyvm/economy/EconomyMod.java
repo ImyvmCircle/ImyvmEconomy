@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntUnaryOperator;
 
@@ -62,8 +63,20 @@ public class EconomyMod implements ModInitializer {
 		IntUnaryOperator periodIncrease = v -> v == PERIOD ? 0 : v + 1;
 
 		AtomicInteger i = new AtomicInteger();
+		AtomicInteger ticks = new AtomicInteger();
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			int value = i.getAndUpdate(periodIncrease);
+			int ticksNow = ticks.getAndIncrement();
+
+			// periodically save the database
+			// 0x7FF -> 2048 ticks -> 1.7 minutes
+			if ((ticksNow & 0x7FF) == 0) {
+				try {
+					data.save();
+				} catch (IOException e) {
+					LOGGER.error("Error occurred when saving database", e);
+				}
+			}
 		});
 	}
 }
