@@ -15,12 +15,14 @@ public class ModConfig {
 
     private boolean isConfigOutdated = false;
 
+    private long userDefaultBalance;
+
     public ModConfig() throws IOException {
         File file = FabricLoader.getInstance().getConfigDir().resolve(CONFIG_FILENAME).toFile();
         Config config = ConfigFactory.parseFile(file);
 
         ConfigWrapper wrapper = new ConfigWrapper(config);
-        wrapper.slope("afk", this::loadAfkConfig);
+        wrapper.slope("user_default", this::loadUserDefaultConfig);
 
         if (isConfigOutdated) {
             ConfigRenderOptions options = ConfigRenderOptions
@@ -34,12 +36,16 @@ public class ModConfig {
         }
     }
 
-    private void loadAfkConfig(ConfigWrapper node) {
-//        this.afkAfterNoAction = (Long) node.get(
-//            "afk_after_no_action",
-//            "how long (in milliseconds) after the player has no actions, he will be set to AFK status.",
-//            600 * 1000,
-//            Config::getLong);
+    private void loadUserDefaultConfig(ConfigWrapper node) {
+        this.userDefaultBalance = (Long) node.get(
+            "default_balance",
+            "The user's default balance, count as [balance * 100]",
+            88 * 100,
+            Config::getLong);
+    }
+
+    public long getUserDefaultBalance() {
+        return this.userDefaultBalance;
     }
 
     private class ConfigWrapper {

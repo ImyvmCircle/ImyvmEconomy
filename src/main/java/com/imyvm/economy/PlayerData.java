@@ -9,6 +9,10 @@ import java.io.IOException;
 public class PlayerData implements Serializable {
     private long money;
 
+    public PlayerData() {
+        this.money = EconomyMod.config.getUserDefaultBalance();
+    }
+
     @Override
     public void serialize(DataOutputStream stream) throws IOException {
         stream.writeLong(money);

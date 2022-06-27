@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntUnaryOperator;
 
 public class EconomyMod implements ModInitializer {
+	public static final String MOD_ID = "imyvm_economy";
 	public static final Logger LOGGER = LoggerFactory.getLogger("Economy");
 	public static ModConfig config;
 	public static Database data;
