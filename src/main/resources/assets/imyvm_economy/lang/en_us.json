@@ -1,5 +1,5 @@
 {
-  "commands.money": "Your balance: %s",
+  "commands.balance": "Your balance: %s",
   "commands.pay.failed.lack": "You don't have enough balance.",
   "commands.pay.success.sender": "You have sent %s$ to %s",
   "commands.pay.success.receiver": "You received %s$ from %s",
