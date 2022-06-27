@@ -11,9 +11,9 @@ import java.util.UUID;
 public class Database {
     public final String DATABASE_FILENAME = "imyvm_economy.db";
 
-    Map<UUID, PlayerData> data;
+    private Map<UUID, PlayerData> data;
 
-    public PlayerData getOrNew(UUID uuid) {
+    public PlayerData getOrCreate(UUID uuid) {
         return data.computeIfAbsent(uuid, (u) -> new PlayerData());
     }
 

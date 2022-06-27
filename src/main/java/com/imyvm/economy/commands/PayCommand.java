@@ -7,7 +7,6 @@ import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -30,8 +29,8 @@ public class PayCommand extends BaseCommand {
                             ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
                             long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
-                            PlayerData sourceData = EconomyMod.data.getOrNew(source.getUuid());
-                            PlayerData targetData = EconomyMod.data.getOrNew(target.getUuid());
+                            PlayerData sourceData = EconomyMod.data.getOrCreate(source.getUuid());
+                            PlayerData targetData = EconomyMod.data.getOrCreate(target.getUuid());
 
                             if (amount > sourceData.getMoney()) {
                                 source.sendMessage(ImmediatelyTranslator.translatable("commands.pay.failed.lack"));

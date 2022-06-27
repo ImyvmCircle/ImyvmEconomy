@@ -7,12 +7,10 @@ import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -43,7 +41,7 @@ public class WalletCommand extends BaseCommand {
                             CommandContext<ServerCommandSource> context = this.castCommandContext(ctx);
 
                             ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-                            PlayerData data = EconomyMod.data.getOrNew(player.getUuid());
+                            PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
 
                             String formattedAmount = MoneyUtil.format(data.getMoney());
                             context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.get", player.getName(), formattedAmount), true);
@@ -58,7 +56,7 @@ public class WalletCommand extends BaseCommand {
         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
         long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
-        PlayerData data = EconomyMod.data.getOrNew(player.getUuid());
+        PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
         modifier.accept(data, amount);
 
         // make sure balance >= 0

@@ -19,7 +19,7 @@ public class MoneyCommand extends BaseCommand {
                 .executes(ctx -> {
                     ServerPlayerEntity player = this.castCommandContext(ctx).getSource().getPlayer();
 
-                    PlayerData data = EconomyMod.data.getOrNew(player.getUuid());
+                    PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
                     String formattedAmount = MoneyUtil.format(data.getMoney());
                     player.sendMessage(ImmediatelyTranslator.translatable("commands.money", formattedAmount));
 
