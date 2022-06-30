@@ -5,9 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Database {
     public final String DATABASE_FILENAME = "imyvm_economy.db";
@@ -35,13 +35,13 @@ public class Database {
         File file = this.getDatabasePath().toFile();
 
         if (!file.exists()) {
-            data = new HashMap<>();
+            data = new ConcurrentHashMap<>();
             return;
         }
 
         try (DataInputStream stream = new DataInputStream(new FileInputStream(file))) {
             int size = stream.readInt();
-            data = new HashMap<>(size);
+            data = new ConcurrentHashMap<>(size);
             for (int i = 0; i < size; i++) {
                 UUID uuid = new UUID(stream.readLong(), stream.readLong());
                 // dummy player name, it will be overridden in `deserialize`
