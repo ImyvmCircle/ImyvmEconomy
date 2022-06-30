@@ -54,6 +54,7 @@ public class EconomyMod implements ModInitializer {
 
 	public void registerCommands() {
 		new BalanceCommand();
+		new BalanceTopCommand();
 		new PayCommand();
 		new WalletCommand();
 	}

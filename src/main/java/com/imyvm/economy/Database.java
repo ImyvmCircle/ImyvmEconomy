@@ -5,9 +5,11 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 public class Database {
     public final String DATABASE_FILENAME = "imyvm_economy.db";
@@ -50,6 +52,10 @@ public class Database {
                 data.put(uuid, player);
             }
         }
+    }
+
+    public Collection<PlayerData> peekPlayers() {
+        return this.data.values();
     }
 
     private Path getDatabasePath() {

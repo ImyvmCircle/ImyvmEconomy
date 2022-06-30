@@ -4,5 +4,7 @@
   "commands.pay.success.sender": "You have sent %s$ to %s",
   "commands.pay.success.receiver": "You received %s$ from %s",
   "commands.wallet.set": "%s's balance has been set to %s",
-  "commands.wallet.get": "%s's balance is %s"
+  "commands.wallet.get": "%s's balance is %s",
+  "commands.balance_top.header": "Top Players:",
+  "commands.balance_top.item": "%s: %s %s$"
 }
