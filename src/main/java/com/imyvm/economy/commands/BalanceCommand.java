@@ -18,7 +18,7 @@ public class BalanceCommand extends BaseCommand {
         LiteralCommandNode<Object> node = dispatcher.register(
             LiteralArgumentBuilder.literal("balance")
                 .requires(source -> ((ServerCommandSource) source).isExecutedByPlayer())
-                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".balance"))
+                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".balance", true))
                 .executes(ctx -> {
                     ServerPlayerEntity player = this.castCommandContext(ctx).getSource().getPlayer();
 

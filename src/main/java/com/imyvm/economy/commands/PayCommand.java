@@ -21,7 +21,7 @@ public class PayCommand extends BaseCommand {
         dispatcher.register(
             LiteralArgumentBuilder.literal("pay")
                 .requires(source -> ((ServerCommandSource) source).isExecutedByPlayer())
-                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".pay"))
+                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".pay", true))
                 .then(RequiredArgumentBuilder.argument("target", EntityArgumentType.player())
                     .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))
                         .executes(ctx -> {
