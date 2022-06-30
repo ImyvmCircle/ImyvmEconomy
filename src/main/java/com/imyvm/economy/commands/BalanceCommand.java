@@ -22,7 +22,7 @@ public class BalanceCommand extends BaseCommand {
                 .executes(ctx -> {
                     ServerPlayerEntity player = this.castCommandContext(ctx).getSource().getPlayer();
 
-                    PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
+                    PlayerData data = EconomyMod.data.getOrCreate(player);
                     String formattedAmount = MoneyUtil.format(data.getMoney());
                     player.sendMessage(ImmediatelyTranslator.translatable("commands.balance", formattedAmount));
 

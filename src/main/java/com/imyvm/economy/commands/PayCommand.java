@@ -31,8 +31,8 @@ public class PayCommand extends BaseCommand {
                             ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
                             long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
-                            PlayerData sourceData = EconomyMod.data.getOrCreate(source.getUuid());
-                            PlayerData targetData = EconomyMod.data.getOrCreate(target.getUuid());
+                            PlayerData sourceData = EconomyMod.data.getOrCreate(source);
+                            PlayerData targetData = EconomyMod.data.getOrCreate(target);
 
                             if (amount > sourceData.getMoney()) {
                                 source.sendMessage(ImmediatelyTranslator.translatable("commands.pay.failed.lack"));

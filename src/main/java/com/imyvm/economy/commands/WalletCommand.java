@@ -42,7 +42,7 @@ public class WalletCommand extends BaseCommand {
                             CommandContext<ServerCommandSource> context = this.castCommandContext(ctx);
 
                             ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-                            PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
+                            PlayerData data = EconomyMod.data.getOrCreate(player);
 
                             String formattedAmount = MoneyUtil.format(data.getMoney());
                             context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.get", player.getName(), formattedAmount), true);
@@ -57,7 +57,7 @@ public class WalletCommand extends BaseCommand {
         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
         long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
-        PlayerData data = EconomyMod.data.getOrCreate(player.getUuid());
+        PlayerData data = EconomyMod.data.getOrCreate(player);
         modifier.accept(data, amount);
 
         // make sure balance >= 0
