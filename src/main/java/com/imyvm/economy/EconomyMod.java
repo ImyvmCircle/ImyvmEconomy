@@ -15,7 +15,7 @@ public class EconomyMod implements ModInitializer {
 	public static final String MOD_ID = "imyvm_economy";
 	public static final Logger LOGGER = LoggerFactory.getLogger("Economy");
 	public static ModConfig config;
-	public static Database data;
+	public static Database data = new Database();
 
 	@Override
 	public void onInitialize() {
@@ -41,7 +41,6 @@ public class EconomyMod implements ModInitializer {
 	public void initializeData() {
 		try {
 			config = new ModConfig();
-			data = new Database();
 			data.load();
 		} catch (Exception e) {
 			LOGGER.error("Failed to initialize data: " + e);
