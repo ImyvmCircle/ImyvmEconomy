@@ -3,7 +3,6 @@ package com.imyvm.economy.commands;
 import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.ImmediatelyTranslator;
 import com.imyvm.economy.PlayerData;
-import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -44,7 +43,7 @@ public class WalletCommand extends BaseCommand {
                             ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
                             PlayerData data = EconomyMod.data.getOrCreate(player);
 
-                            String formattedAmount = MoneyUtil.format(data.getMoney());
+                            String formattedAmount = data.getMoneyFormatted();
                             context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.get", player.getName(), formattedAmount), true);
 
                             return Command.SINGLE_SUCCESS;
@@ -63,7 +62,7 @@ public class WalletCommand extends BaseCommand {
         // make sure balance >= 0
         data.setMoney(Long.max(0, data.getMoney()));
 
-        String formattedAmount = MoneyUtil.format(data.getMoney());
+        String formattedAmount = data.getMoneyFormatted();
         context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.set", player.getName(), formattedAmount), true);
 
         return Command.SINGLE_SUCCESS;

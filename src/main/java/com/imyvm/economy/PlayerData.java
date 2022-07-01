@@ -1,6 +1,7 @@
 package com.imyvm.economy;
 
 import com.imyvm.economy.interfaces.Serializable;
+import com.imyvm.economy.util.MoneyUtil;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,6 +31,10 @@ public class PlayerData implements Serializable {
     public long addMoney(long amount) {
         this.money += amount;
         return this.money;
+    }
+
+    public String getMoneyFormatted() {
+        return MoneyUtil.format(this.getMoney());
     }
 
     public String getName() {

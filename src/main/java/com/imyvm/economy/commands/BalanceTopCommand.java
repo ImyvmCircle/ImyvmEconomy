@@ -3,7 +3,6 @@ package com.imyvm.economy.commands;
 import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.ImmediatelyTranslator;
 import com.imyvm.economy.PlayerData;
-import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -38,7 +37,7 @@ public class BalanceTopCommand extends BaseCommand {
                     int index = 0;
                     for (PlayerData player : topPlayers) {
                         ++index;
-                        text.append("\n").append(ImmediatelyTranslator.translatable("commands.balance_top.item", index, player.getName(), MoneyUtil.format(player.getMoney())));
+                        text.append("\n").append(ImmediatelyTranslator.translatable("commands.balance_top.item", index, player.getName(), player.getMoneyFormatted()));
                     }
                     this.castCommandContext(ctx).getSource().sendFeedback(text, false);
 
