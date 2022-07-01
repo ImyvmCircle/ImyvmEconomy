@@ -12,16 +12,20 @@ public class PlayerWallet {
         this.data = data;
     }
 
+    public long getMoney() {
+        return data.getMoney();
+    }
+
+    public String getMoneyFormatted() {
+        return data.getMoneyFormatted();
+    }
+
     public boolean takeMoney(long amount) {
         assert amount >= 0 : "PlayerWallet.addMoney: the amount must not be negative value";
         if (data.getMoney() < amount)
             return false;
         data.addMoney(-amount);
         return true;
-    }
-
-    public long getMoney() {
-        return data.getMoney();
     }
 
     public void addMoney(long amount) {
