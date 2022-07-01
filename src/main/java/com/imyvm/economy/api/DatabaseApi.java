@@ -16,6 +16,10 @@ public class DatabaseApi {
         this.database = database;
     }
 
+    public static DatabaseApi getInstance() {
+        return instance;
+    }
+
     @NotNull
     public PlayerWallet getPlayer(@NotNull PlayerEntity player) {
         Objects.requireNonNull(player);
