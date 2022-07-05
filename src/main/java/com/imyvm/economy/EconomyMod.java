@@ -1,7 +1,8 @@
 package com.imyvm.economy;
 
-import com.imyvm.economy.commands.*;
+import com.imyvm.economy.commands.CommandRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class EconomyMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		registerCommands();
+		CommandRegistrationCallback.EVENT.register(CommandRegistry::register);
 		registerEvents();
 		registerLazyTick();
 
@@ -49,13 +50,6 @@ public class EconomyMod implements ModInitializer {
 	}
 
 	public void registerEvents() {
-	}
-
-	public void registerCommands() {
-		new BalanceCommand();
-		new BalanceTopCommand();
-		new PayCommand();
-		new WalletCommand();
 	}
 
 	public void registerLazyTick() {

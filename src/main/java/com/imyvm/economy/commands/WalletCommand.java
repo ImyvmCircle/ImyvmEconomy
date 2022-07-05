@@ -1,16 +1,11 @@
 package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
-import com.imyvm.economy.Translator;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,40 +16,29 @@ import static com.imyvm.economy.Translator.tr;
 
 public class WalletCommand extends BaseCommand {
     @Override
-    protected void registerCommand(CommandDispatcher<Object> dispatcher) {
-        dispatcher.register(
-            LiteralArgumentBuilder.literal("wallet")
-                .requires(source -> Permissions.check((ServerCommandSource) source, EconomyMod.MOD_ID + ".wallet", 2))
-                .then(LiteralArgumentBuilder.literal("add")
-                    .then(RequiredArgumentBuilder.argument("player", EntityArgumentType.player())
-                        .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))
-                            .executes(ctx -> this.updateOnesBalance(ctx, PlayerData::addMoney)))))
-                .then(LiteralArgumentBuilder.literal("take")
-                    .then(RequiredArgumentBuilder.argument("player", EntityArgumentType.player())
-                        .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))
-                            .executes(ctx -> this.updateOnesBalance(ctx, (data, amount) -> data.addMoney(-amount))))))
-                .then(LiteralArgumentBuilder.literal("set")
-                    .then(RequiredArgumentBuilder.argument("player", EntityArgumentType.player())
-                        .then(RequiredArgumentBuilder.argument("amount", DoubleArgumentType.doubleArg(0))
-                            .executes(ctx -> this.updateOnesBalance(ctx, PlayerData::setMoney)))))
-                .then(LiteralArgumentBuilder.literal("get")
-                    .then(RequiredArgumentBuilder.argument("player", EntityArgumentType.player())
-                        .executes(ctx -> {
-                            CommandContext<ServerCommandSource> context = this.castCommandContext(ctx);
+    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
+        PlayerData data = EconomyMod.data.getOrCreate(player);
 
-                            ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-                            PlayerData data = EconomyMod.data.getOrCreate(player);
+        String formattedAmount = data.getMoneyFormatted();
+        context.getSource().sendFeedback(tr("commands.wallet.get", player.getName(), formattedAmount), true);
 
-                            String formattedAmount = data.getMoneyFormatted();
-                            context.getSource().sendFeedback(tr("commands.wallet.get", player.getName(), formattedAmount), true);
-
-                            return Command.SINGLE_SUCCESS;
-                        }))));
+        return Command.SINGLE_SUCCESS;
     }
 
-    private int updateOnesBalance(CommandContext<Object> ctx, BiConsumer<PlayerData, Long> modifier) throws CommandSyntaxException {
-        CommandContext<ServerCommandSource> context = this.castCommandContext(ctx);
+    public int runAddMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        return this.updateOnesBalance(context, PlayerData::addMoney);
+    }
 
+    public int runTakeMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(-amount));
+    }
+
+    public int runSetMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        return this.updateOnesBalance(context, PlayerData::setMoney);
+    }
+
+    private int updateOnesBalance(CommandContext<ServerCommandSource> context, BiConsumer<PlayerData, Long> modifier) throws CommandSyntaxException {
         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
         long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
