@@ -1,7 +1,6 @@
 package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
-import com.imyvm.economy.ImmediatelyTranslator;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -10,6 +9,8 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import static com.imyvm.economy.Translator.tr;
 
 public class BalanceCommand extends BaseCommand {
     @Override
@@ -23,7 +24,7 @@ public class BalanceCommand extends BaseCommand {
 
                     PlayerData data = EconomyMod.data.getOrCreate(player);
                     String formattedAmount = data.getMoneyFormatted();
-                    player.sendMessage(ImmediatelyTranslator.translatable("commands.balance", formattedAmount));
+                    player.sendMessage(tr("commands.balance", formattedAmount));
 
                     return Command.SINGLE_SUCCESS;
                 }));

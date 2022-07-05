@@ -14,7 +14,7 @@ import java.util.function.IntUnaryOperator;
 public class EconomyMod implements ModInitializer {
 	public static final String MOD_ID = "imyvm_economy";
 	public static final Logger LOGGER = LoggerFactory.getLogger("Economy");
-	public static ModConfig config;
+	public static final ModConfig CONFIG = new ModConfig();
 	public static Database data = new Database();
 
 	@Override
@@ -23,6 +23,7 @@ public class EconomyMod implements ModInitializer {
 		registerEvents();
 		registerLazyTick();
 
+		CONFIG.loadAndSave();
 		initializeData();
 
 		ServerLifecycleEvents.SERVER_STOPPING.register((server) -> {
@@ -40,7 +41,6 @@ public class EconomyMod implements ModInitializer {
 
 	public void initializeData() {
 		try {
-			config = new ModConfig();
 			data.load();
 		} catch (Exception e) {
 			LOGGER.error("Failed to initialize data: " + e);

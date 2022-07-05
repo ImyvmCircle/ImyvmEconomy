@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set environmental variables
+        run: |
+          echo "GITHUB_USERNAME=$GITHUB_ACTOR" >> $GITHUB_ENV
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:

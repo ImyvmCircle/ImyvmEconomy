@@ -1,7 +1,6 @@
 package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
-import com.imyvm.economy.ImmediatelyTranslator;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -13,6 +12,8 @@ import net.minecraft.text.MutableText;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+
+import static com.imyvm.economy.Translator.tr;
 
 public class BalanceTopCommand extends BaseCommand {
     public final int MAX_TOP_PLAYERS = 16;
@@ -33,11 +34,11 @@ public class BalanceTopCommand extends BaseCommand {
                     PlayerData[] topPlayers = heap.toArray(new PlayerData[0]);
                     Arrays.sort(topPlayers, Comparator.comparing(PlayerData::getMoney).reversed());
 
-                    MutableText text = (MutableText) ImmediatelyTranslator.translatable("commands.balance_top.header");
+                    MutableText text = (MutableText) tr("commands.balance_top.header");
                     int index = 0;
                     for (PlayerData player : topPlayers) {
                         ++index;
-                        text.append("\n").append(ImmediatelyTranslator.translatable("commands.balance_top.item", index, player.getName(), player.getMoneyFormatted()));
+                        text.append("\n").append(tr("commands.balance_top.item", index, player.getName(), player.getMoneyFormatted()));
                     }
                     this.castCommandContext(ctx).getSource().sendFeedback(text, false);
 

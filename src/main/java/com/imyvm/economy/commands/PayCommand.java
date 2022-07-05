@@ -1,7 +1,6 @@
 package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
-import com.imyvm.economy.ImmediatelyTranslator;
 import com.imyvm.economy.PlayerData;
 import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
@@ -14,6 +13,8 @@ import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import static com.imyvm.economy.Translator.tr;
 
 public class PayCommand extends BaseCommand {
     @Override
@@ -35,13 +36,13 @@ public class PayCommand extends BaseCommand {
                             PlayerData targetData = EconomyMod.data.getOrCreate(target);
 
                             if (amount > sourceData.getMoney()) {
-                                source.sendMessage(ImmediatelyTranslator.translatable("commands.pay.failed.lack"));
+                                source.sendMessage(tr("commands.pay.failed.lack"));
                                 return -1;
                             }
 
                             String formattedAmount = MoneyUtil.format(amount);
-                            source.sendMessage(ImmediatelyTranslator.translatable("commands.pay.success.sender", formattedAmount, target.getName()));
-                            target.sendMessage(ImmediatelyTranslator.translatable("commands.pay.success.receiver", formattedAmount, source.getName()));
+                            source.sendMessage(tr("commands.pay.success.sender", formattedAmount, target.getName()));
+                            target.sendMessage(tr("commands.pay.success.receiver", formattedAmount, source.getName()));
 
                             sourceData.addMoney(-amount);
                             targetData.addMoney(amount);

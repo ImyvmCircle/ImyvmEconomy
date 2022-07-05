@@ -16,6 +16,16 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven {
+		url = uri("https://maven.pkg.github.com/ImyvmCircle/Hoki")
+		credentials {
+			username = System.getenv("GITHUB_USERNAME")
+			password = System.getenv("GITHUB_TOKEN")
+		}
+	}
+
+	// Fabric Permissions Api
 	maven {
 		url 'https://oss.sonatype.org/content/repositories/snapshots'
 	}
@@ -31,8 +41,9 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.mojang:brigadier:${project.brigadier_version}"
-	implementation include("com.typesafe:config:${project.typesafe_version}")
 	modImplementation "me.lucko:fabric-permissions-api:${project.fabric_permissions_api_version}"
+
+	modImplementation "com.imyvm:imyvm-hoki:${project.imyvm_hoki_version}"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

@@ -1,7 +1,7 @@
 package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
-import com.imyvm.economy.ImmediatelyTranslator;
+import com.imyvm.economy.Translator;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -16,6 +16,8 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.function.BiConsumer;
+
+import static com.imyvm.economy.Translator.tr;
 
 public class WalletCommand extends BaseCommand {
     @Override
@@ -44,7 +46,7 @@ public class WalletCommand extends BaseCommand {
                             PlayerData data = EconomyMod.data.getOrCreate(player);
 
                             String formattedAmount = data.getMoneyFormatted();
-                            context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.get", player.getName(), formattedAmount), true);
+                            context.getSource().sendFeedback(tr("commands.wallet.get", player.getName(), formattedAmount), true);
 
                             return Command.SINGLE_SUCCESS;
                         }))));
@@ -63,7 +65,7 @@ public class WalletCommand extends BaseCommand {
         data.setMoney(Long.max(0, data.getMoney()));
 
         String formattedAmount = data.getMoneyFormatted();
-        context.getSource().sendFeedback(ImmediatelyTranslator.translatable("commands.wallet.set", player.getName(), formattedAmount), true);
+        context.getSource().sendFeedback(tr("commands.wallet.set", player.getName(), formattedAmount), true);
 
         return Command.SINGLE_SUCCESS;
     }

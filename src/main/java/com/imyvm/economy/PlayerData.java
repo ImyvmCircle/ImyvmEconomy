@@ -7,13 +7,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import static com.imyvm.economy.EconomyMod.CONFIG;
+
 public class PlayerData implements Serializable {
     private String name;
     private long money;
 
     public PlayerData(String name) {
         this.name = name;
-        this.money = EconomyMod.config.getUserDefaultBalance();
+        this.money = CONFIG.USER_DEFAULT_BALANCE.getValue();
     }
 
     @Override

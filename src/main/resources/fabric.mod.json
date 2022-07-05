@@ -29,6 +29,7 @@
     "fabric": "*",
     "minecraft": "~1.19",
     "java": ">=17",
-    "fabric-permissions-api-v0": "*"
+    "fabric-permissions-api-v0": "*",
+    "hoki": ">=1.0.0"
   }
 }
