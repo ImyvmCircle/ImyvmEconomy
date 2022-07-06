@@ -39,7 +39,7 @@ public class CommandRegistry {
                 .then(literal("add")
                     .then(argument("player", EntityArgumentType.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
-                            .executes(walletCommand::runAddMoney)))
+                            .executes(walletCommand::runAddMoney))))
                 .then(literal("take")
                     .then(argument("player", EntityArgumentType.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
@@ -47,10 +47,10 @@ public class CommandRegistry {
                 .then(literal("set")
                     .then(argument("player", EntityArgumentType.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
-                            .executes(walletCommand::runSetMoney)))
+                            .executes(walletCommand::runSetMoney))))
                 .then(literal("get")
                     .then(argument("player", EntityArgumentType.player())
-                        .executes(walletCommand))))));
+                        .executes(walletCommand))));
 
         dispatcher.register(
             literal("balance_top")
