@@ -1,10 +1,10 @@
 {
-  "commands.balance": "Your balance: %s",
+  "commands.balance": "Your balance: {0}",
   "commands.pay.failed.lack": "You don't have enough balance.",
-  "commands.pay.success.sender": "You have sent %s$ to %s",
-  "commands.pay.success.receiver": "You received %s$ from %s",
-  "commands.wallet.set": "%s's balance has been set to %s",
-  "commands.wallet.get": "%s's balance is %s",
+  "commands.pay.success.sender": "You have sent {0}$ to {1}",
+  "commands.pay.success.receiver": "You received {0}$ from {1}",
+  "commands.wallet.set": "{0}'s balance has been set to {1}",
+  "commands.wallet.get": "{0}'s balance is {1}",
   "commands.balance_top.header": "Top Players:",
-  "commands.balance_top.item": "%s: %s %s$"
+  "commands.balance_top.item": "{0}: {1} {2}$"
 }
