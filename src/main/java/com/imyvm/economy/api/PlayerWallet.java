@@ -1,14 +1,21 @@
 package com.imyvm.economy.api;
 
 import com.imyvm.economy.PlayerData;
+import com.imyvm.economy.util.MoneyUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static com.imyvm.economy.Translator.tr;
+
 public class PlayerWallet {
+    private final PlayerEntity player;
     private final PlayerData data;
 
-    PlayerWallet(PlayerData data) {
+    PlayerWallet(PlayerEntity player, PlayerData data) {
+        this.player = player;
         this.data = data;
     }
 
@@ -39,5 +46,16 @@ public class PlayerWallet {
             return false;
         target.addMoney(amount);
         return true;
+    }
+
+    public boolean buyGoodsWithNotification(long amount, Text goods) {
+        boolean result = this.takeMoney(amount);
+
+        if (result)
+            this.player.sendMessage(tr("api.buy_goods.success", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));
+        else
+            this.player.sendMessage(tr("api.buy_goods.failed.insufficient_balance", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));
+
+        return result;
     }
 }

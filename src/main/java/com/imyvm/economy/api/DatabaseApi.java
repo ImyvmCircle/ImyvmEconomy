@@ -23,6 +23,6 @@ public class DatabaseApi {
     @NotNull
     public PlayerWallet getPlayer(@NotNull PlayerEntity player) {
         Objects.requireNonNull(player);
-        return new PlayerWallet(this.database.getOrCreate(player));
+        return new PlayerWallet(player, this.database.getOrCreate(player));
     }
 }
