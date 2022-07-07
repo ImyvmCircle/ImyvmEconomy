@@ -52,7 +52,8 @@ public class PlayerWallet {
         return true;
     }
 
-    public boolean buyGoodsWithNotification(long amount, Text goods) {
+    public boolean buyGoodsWithNotification(long amount, @NotNull Text goods) {
+        Objects.requireNonNull(goods);
         boolean result = this.takeMoney(amount);
 
         if (result)
@@ -63,7 +64,8 @@ public class PlayerWallet {
         return result;
     }
 
-    public void buyGoodsWithNotificationInCommand(long amount, Text goods) throws CommandSyntaxException {
+    public void buyGoodsWithNotificationInCommand(long amount, @NotNull Text goods) throws CommandSyntaxException {
+        Objects.requireNonNull(goods);
         if (!this.takeMoney(amount))
             throw INSUFFICIENT_BALANCE_EXCEPTION.create(amount, goods, this.getMoneyFormatted());
 
