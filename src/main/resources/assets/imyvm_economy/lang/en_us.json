@@ -7,6 +7,6 @@
   "commands.wallet.get": "{0}'s balance is {1}",
   "commands.balance_top.header": "Top Players:",
   "commands.balance_top.item": "{0}: {1} {2}$",
-  "api.buy_goods.success": "You paid {0}$ for {1}, the balance is now {2}$",
-  "api.buy_goods.failed.insufficient_balance": "You can't pay {0}$ for {1}, since your balance is {2}$"
+  "api.buy_goods.success": "You paid {0}$ for {1}, your balance is now {2}$",
+  "api.buy_goods.failed.insufficient_balance": "You can't pay {0}$ for {1}, since your balance is only {2}$"
 }
