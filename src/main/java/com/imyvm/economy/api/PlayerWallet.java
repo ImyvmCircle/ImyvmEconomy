@@ -2,6 +2,8 @@ package com.imyvm.economy.api;
 
 import com.imyvm.economy.PlayerData;
 import com.imyvm.economy.util.MoneyUtil;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.Dynamic3CommandExceptionType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +13,8 @@ import java.util.Objects;
 import static com.imyvm.economy.Translator.tr;
 
 public class PlayerWallet {
+    private static final Dynamic3CommandExceptionType INSUFFICIENT_BALANCE_EXCEPTION = new Dynamic3CommandExceptionType((amount, goods, balance) -> tr("api.buy_goods.failed.insufficient_balance", MoneyUtil.format((Long) amount), goods, balance));
+
     private final PlayerEntity player;
     private final PlayerData data;
 
@@ -57,5 +61,12 @@ public class PlayerWallet {
             this.player.sendMessage(tr("api.buy_goods.failed.insufficient_balance", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));
 
         return result;
+    }
+
+    public void buyGoodsWithNotificationInCommand(long amount, Text goods) throws CommandSyntaxException {
+        if (!this.takeMoney(amount))
+            throw INSUFFICIENT_BALANCE_EXCEPTION.create(amount, goods, this.getMoneyFormatted());
+
+        this.player.sendMessage(tr("api.buy_goods.success", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));
     }
 }
