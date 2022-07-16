@@ -1,0 +1,12 @@
+{
+  "commands.balance": "§6你的金钱: §a{0}",
+  "commands.pay.failed.lack": "§4错误：§6你没有足够的金钱",
+  "commands.pay.success.sender": "§a{0}$ §6已被加入到 §c{1} §6的账户",
+  "commands.pay.success.receiver": "§6已从§c {1} §6那里接收 §a{0}$",
+  "commands.wallet.set": "§c{0} §6的余额已被更新为：§a{1}$",
+  "commands.wallet.get": "§c{0} §6的余额为 §a{1}$",
+  "commands.balance_top.header": "§e金§6钱§6排行：",
+  "commands.balance_top.item": "§6{0}: §c{1} §a{2}$",
+  "api.buy_goods.success": "§6你花费 §a{0}$ §6购买了 §e{1}§6，现在的余额是 §a{2}$",
+  "api.buy_goods.failed.insufficient_balance": "§4错误：§6您不能购买价值 §a{0}$ 的 §e{1}§6，您的余额只有 §a{2}$"
+}
