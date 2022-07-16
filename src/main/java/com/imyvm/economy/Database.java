@@ -26,8 +26,8 @@ public class Database {
         try (DataOutputStream stream = new DataOutputStream(new FileOutputStream(file))) {
             stream.writeInt(data.size());
             for (var entry : data.entrySet()) {
-                stream.writeLong(entry.getKey().getLeastSignificantBits());
                 stream.writeLong(entry.getKey().getMostSignificantBits());
+                stream.writeLong(entry.getKey().getLeastSignificantBits());
                 entry.getValue().serialize(stream);
             }
         }
