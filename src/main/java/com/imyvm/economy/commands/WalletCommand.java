@@ -9,8 +9,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 import static com.imyvm.economy.Translator.tr;
 
@@ -21,7 +23,8 @@ public class WalletCommand extends BaseCommand {
         PlayerData data = EconomyMod.data.getOrCreate(player);
 
         String formattedAmount = data.getMoneyFormatted();
-        context.getSource().sendFeedback(tr("commands.wallet.get", player.getName(), formattedAmount), true);
+        Supplier<Text> textSupplier = () -> tr("commands.wallet.get", player.getName(), formattedAmount);
+        context.getSource().sendFeedback(textSupplier, true);
 
         return Command.SINGLE_SUCCESS;
     }
@@ -49,7 +52,8 @@ public class WalletCommand extends BaseCommand {
         data.setMoney(Long.max(0, data.getMoney()));
 
         String formattedAmount = data.getMoneyFormatted();
-        context.getSource().sendFeedback(tr("commands.wallet.set", player.getName(), formattedAmount), true);
+        Supplier<Text> textSupplier = () ->  tr("commands.wallet.set", player.getName(), formattedAmount);
+        context.getSource().sendFeedback(textSupplier, true);
 
         return Command.SINGLE_SUCCESS;
     }

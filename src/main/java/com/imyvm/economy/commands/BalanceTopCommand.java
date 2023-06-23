@@ -6,10 +6,12 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.function.Supplier;
 
 import static com.imyvm.economy.Translator.tr;
 
@@ -34,7 +36,8 @@ public class BalanceTopCommand extends BaseCommand {
             ++index;
             text.append("\n").append(tr("commands.balance_top.item", index, player.getName(), player.getMoneyFormatted()));
         }
-        context.getSource().sendFeedback(text, false);
+        Supplier<Text> textSupplier = () -> text;
+        context.getSource().sendFeedback(textSupplier, false);
 
         return Command.SINGLE_SUCCESS;
     }
