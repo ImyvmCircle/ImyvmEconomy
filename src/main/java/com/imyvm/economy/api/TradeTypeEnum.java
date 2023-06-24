@@ -1,9 +1,5 @@
 package com.imyvm.economy.api;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * 当你调用addMoney方法时，你需要提供TradeType来完成税收相关的设置。
  * 也可以用TradeTypeEnumRegistrar来新建自己的枚举类型。
