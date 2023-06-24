@@ -1,5 +1,6 @@
 package com.imyvm.economy;
 
+import com.imyvm.economy.api.TradeTypeEnum;
 import com.imyvm.economy.interfaces.Serializable;
 import com.imyvm.economy.util.MoneyUtil;
 
@@ -8,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import static com.imyvm.economy.EconomyMod.CONFIG;
+import static java.lang.Math.abs;
 
 public class PlayerData implements Serializable {
     private String name;
@@ -30,8 +32,17 @@ public class PlayerData implements Serializable {
         this.money = stream.readLong();
     }
 
-    public long addMoney(long amount) {
-        this.money += amount;
+    public long addMoney(long amount, TradeTypeEnum.TradeTypeExtension type) {
+        PlayerData admin = EconomyMod.data.getOrCreate(CONFIG.ADMIN_UUID.getValue(),CONFIG.ADMIN_NAME.getValue());
+        Double tax = type.getTax();
+        long amountFin;
+        if (amount > 0){
+            amountFin = amount - (long) (amount * tax);
+        } else {
+            amountFin = amount + (long) (amount * tax);
+        }
+        this.money += amountFin;
+        admin.money += abs((long) (tax * amount));
         return this.money;
     }
 

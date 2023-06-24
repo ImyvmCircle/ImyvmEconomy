@@ -2,6 +2,7 @@ package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.PlayerData;
+import com.imyvm.economy.api.TradeTypeEnum;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -30,11 +31,11 @@ public class WalletCommand extends BaseCommand {
     }
 
     public int runAddMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        return this.updateOnesBalance(context, PlayerData::addMoney);
+        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(amount, TradeTypeEnum.TradeType.DUTYFREE));
     }
 
     public int runTakeMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(-amount));
+        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(-amount, TradeTypeEnum.TradeType.DUTYFREE));
     }
 
     public int runSetMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {

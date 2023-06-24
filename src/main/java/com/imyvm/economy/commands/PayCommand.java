@@ -2,6 +2,7 @@ package com.imyvm.economy.commands;
 
 import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.PlayerData;
+import com.imyvm.economy.api.TradeTypeEnum;
 import com.imyvm.economy.util.MoneyUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -33,8 +34,8 @@ public class PayCommand extends BaseCommand {
         source.sendMessage(tr("commands.pay.success.sender", formattedAmount, target.getName()));
         target.sendMessage(tr("commands.pay.success.receiver", formattedAmount, source.getName()));
 
-        sourceData.addMoney(-amount);
-        targetData.addMoney(amount);
+        sourceData.addMoney(-amount, TradeTypeEnum.TradeType.DUTYFREE);
+        targetData.addMoney(amount, TradeTypeEnum.TradeType.PAY);
 
         return Command.SINGLE_SUCCESS;
     }

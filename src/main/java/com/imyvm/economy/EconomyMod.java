@@ -1,5 +1,6 @@
 package com.imyvm.economy;
 
+import com.imyvm.economy.api.TradeTypeEnum;
 import com.imyvm.economy.commands.CommandRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -26,6 +27,8 @@ public class EconomyMod implements ModInitializer {
 
 		CONFIG.loadAndSave();
 		initializeData();
+		TradeTypeEnum.TradeType.PAY.setTax(CONFIG.TAX_RATE.getValue());
+		TradeTypeEnum.TradeType.DUTYFREE.setTax(0.0);
 
 		ServerLifecycleEvents.SERVER_STOPPING.register((server) -> {
 			LOGGER.info("The economy database is saving");

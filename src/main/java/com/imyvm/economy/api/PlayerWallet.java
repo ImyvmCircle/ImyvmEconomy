@@ -31,30 +31,30 @@ public class PlayerWallet {
         return data.getMoneyFormatted();
     }
 
-    public boolean takeMoney(long amount) {
+    public boolean takeMoney(long amount, TradeTypeEnum.TradeTypeExtension tradeType) {
         assert amount >= 0 : "PlayerWallet.addMoney: the amount must not be negative value";
         if (data.getMoney() < amount)
             return false;
-        data.addMoney(-amount);
+        data.addMoney(-amount, tradeType);
         return true;
     }
 
-    public void addMoney(long amount) {
+    public void addMoney(long amount, TradeTypeEnum.TradeTypeExtension tradeType) {
         assert amount >= 0 : "PlayerWallet.addMoney: the amount must not be negative value";
-        data.addMoney(amount);
+        data.addMoney(amount, tradeType);
     }
 
-    public boolean payTo(@NotNull PlayerWallet target, long amount) {
+    public boolean payTo(@NotNull PlayerWallet target, long amount, TradeTypeEnum.TradeType tradeType) {
         Objects.requireNonNull(target);
-        if (!this.takeMoney(amount))
+        if (!this.takeMoney(amount, tradeType))
             return false;
-        target.addMoney(amount);
+        target.addMoney(amount, tradeType);
         return true;
     }
 
-    public boolean buyGoodsWithNotification(long amount, @NotNull Text goods) {
+    public boolean buyGoodsWithNotification(long amount, @NotNull Text goods, TradeTypeEnum.TradeType tradeType) {
         Objects.requireNonNull(goods);
-        boolean result = this.takeMoney(amount);
+        boolean result = this.takeMoney(amount, tradeType);
 
         if (result)
             this.player.sendMessage(tr("api.buy_goods.success", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));
@@ -64,9 +64,9 @@ public class PlayerWallet {
         return result;
     }
 
-    public void buyGoodsWithNotificationInCommand(long amount, @NotNull Text goods) throws CommandSyntaxException {
+    public void buyGoodsWithNotificationInCommand(long amount, @NotNull Text goods, TradeTypeEnum.TradeTypeExtension tradeType) throws CommandSyntaxException {
         Objects.requireNonNull(goods);
-        if (!this.takeMoney(amount))
+        if (!this.takeMoney(amount, tradeType))
             throw INSUFFICIENT_BALANCE_EXCEPTION.create(amount, goods, this.getMoneyFormatted());
 
         this.player.sendMessage(tr("api.buy_goods.success", MoneyUtil.format(amount), goods, this.getMoneyFormatted()));

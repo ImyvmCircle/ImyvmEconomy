@@ -20,6 +20,11 @@ public class Database {
         return data.computeIfAbsent(player.getUuid(), (u) -> new PlayerData(player.getEntityName()));
     }
 
+    public PlayerData getOrCreate(String playeruuid, String playername){
+        UUID uuid = UUID.fromString(playeruuid);
+        return data.computeIfAbsent(uuid, (u) -> new PlayerData(playername));
+    }
+
     public void save() throws IOException {
         File file = this.getDatabasePath().toFile();
 
