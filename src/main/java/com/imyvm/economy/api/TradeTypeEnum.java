@@ -5,23 +5,20 @@ package com.imyvm.economy.api;
  * 也可以用TradeTypeEnumRegistrar来新建自己的枚举类型。
  */
 public class TradeTypeEnum{
-
-    public interface TradeTypeExtension {
-        Double getTax();
-        void setTax(Double tax);
-    }
     /**
      * 提供交易类型
      * 默认有PAY和DUTYFREE
-     * 你也可以自己添加*/
-    public enum TradeType implements TradeTypeExtension{
+     * 你也可以自己添加
+     */
+    public enum TradeType implements TradeTypeExtension {
         PAY,
         DUTYFREE;
 
         private Double tax;
+
         @Override
-        public Double getTax(){
-            return tax;
+        public Double getTax() {
+            return this.tax;
         }
 
         @Override
@@ -29,5 +26,13 @@ public class TradeTypeEnum{
             this.tax = tax;
         }
     }
+
+    public interface TradeTypeExtension {
+        Double getTax();
+
+        void setTax(Double tax);
+    }
+
+
 }
 

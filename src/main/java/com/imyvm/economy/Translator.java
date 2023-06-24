@@ -12,9 +12,7 @@ public class Translator extends HokiTranslator {
     private static HokiLanguage instance = createLanguage(CONFIG.LANGUAGE.getValue());
 
     static {
-        CONFIG.LANGUAGE.changeEvents.register((option, oldValue, newValue) -> {
-            instance = createLanguage(option.getValue());
-        });
+        CONFIG.LANGUAGE.changeEvents.register((option, oldValue, newValue) -> instance = createLanguage(option.getValue()));
     }
 
     public static Text tr(String key, Object... args) {

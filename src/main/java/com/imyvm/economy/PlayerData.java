@@ -33,10 +33,10 @@ public class PlayerData implements Serializable {
     }
 
     public long addMoney(long amount, TradeTypeEnum.TradeTypeExtension type) {
-        PlayerData admin = EconomyMod.data.getOrCreate(CONFIG.ADMIN_UUID.getValue(),CONFIG.ADMIN_NAME.getValue());
+        PlayerData admin = EconomyMod.data.getOrCreate(CONFIG.ADMIN_UUID.getValue(), CONFIG.ADMIN_NAME.getValue());
         Double tax = type.getTax();
         long amountFin;
-        if (amount > 0){
+        if (amount > 0) {
             amountFin = amount - (long) (amount * tax);
         } else {
             amountFin = amount + (long) (amount * tax);

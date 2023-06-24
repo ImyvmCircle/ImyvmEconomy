@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 public class Database {
     public final String DATABASE_FILENAME = "imyvm_economy.db";
@@ -20,9 +19,9 @@ public class Database {
         return data.computeIfAbsent(player.getUuid(), (u) -> new PlayerData(player.getEntityName()));
     }
 
-    public PlayerData getOrCreate(String playeruuid, String playername){
-        UUID uuid = UUID.fromString(playeruuid);
-        return data.computeIfAbsent(uuid, (u) -> new PlayerData(playername));
+    public PlayerData getOrCreate(String playerUuid, String playerName) {
+        UUID uuid = UUID.fromString(playerUuid);
+        return data.computeIfAbsent(uuid, (u) -> new PlayerData(playerName));
     }
 
     public void save() throws IOException {
