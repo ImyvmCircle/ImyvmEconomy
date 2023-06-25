@@ -12,12 +12,12 @@ public class TradeTypeEnum{
      */
     public enum TradeType implements TradeTypeExtension {
         PAY,
-        DUTYFREE;
+        DUTY_FREE;
 
-        private Double tax;
+        private double tax;
 
         @Override
-        public Double getTax() {
+        public double getTax() {
             return this.tax;
         }
 
@@ -28,7 +28,7 @@ public class TradeTypeEnum{
     }
 
     public interface TradeTypeExtension {
-        Double getTax();
+        double getTax();
 
         void setTax(Double tax);
     }

@@ -28,7 +28,7 @@ public class EconomyMod implements ModInitializer {
 		CONFIG.loadAndSave();
 		initializeData();
 		TradeTypeEnum.TradeType.PAY.setTax(CONFIG.TAX_RATE.getValue());
-		TradeTypeEnum.TradeType.DUTYFREE.setTax(0.0);
+		TradeTypeEnum.TradeType.DUTY_FREE.setTax(0.0);
 
 		ServerLifecycleEvents.SERVER_STOPPING.register((server) -> {
 			LOGGER.info("The economy database is saving");

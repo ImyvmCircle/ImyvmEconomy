@@ -34,7 +34,7 @@ public class PayCommand extends BaseCommand {
         source.sendMessage(tr("commands.pay.success.sender", formattedAmount, target.getName()));
         target.sendMessage(tr("commands.pay.success.receiver", formattedAmount, source.getName()));
 
-        sourceData.addMoney(-amount, TradeTypeEnum.TradeType.DUTYFREE);
+        sourceData.addMoney(-amount, TradeTypeEnum.TradeType.DUTY_FREE);
         targetData.addMoney(amount, TradeTypeEnum.TradeType.PAY);
 
         return Command.SINGLE_SUCCESS;

@@ -31,11 +31,11 @@ public class WalletCommand extends BaseCommand {
     }
 
     public int runAddMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(amount, TradeTypeEnum.TradeType.DUTYFREE));
+        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(amount, TradeTypeEnum.TradeType.DUTY_FREE));
     }
 
     public int runTakeMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(-amount, TradeTypeEnum.TradeType.DUTYFREE));
+        return this.updateOnesBalance(context, (data, amount) -> data.addMoney(-amount, TradeTypeEnum.TradeType.DUTY_FREE));
     }
 
     public int runSetMoney(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
