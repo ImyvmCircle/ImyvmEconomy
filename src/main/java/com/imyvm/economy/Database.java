@@ -17,7 +17,7 @@ public class Database {
     private Map<UUID, PlayerData> data;
 
     public PlayerData getOrCreate(PlayerEntity player) {
-        return data.computeIfAbsent(player.getUuid(), (u) -> new PlayerData(player.getEntityName()));
+        return data.computeIfAbsent(player.getUuid(), (u) -> new PlayerData(player.getNameForScoreboard()));
     }
 
     public void save() throws IOException {
