@@ -101,5 +101,13 @@ publishing {
 				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
+
+		maven {
+			url = 's3://imyvm-maven-repository'
+			credentials(AwsCredentials) {
+				accessKey = System.getenv("S3_ACCESS_KEY_ID")
+				secretKey = System.getenv("S3_SECRET_ACCESS_KEY")
+			}
+		}
 	}
 }
