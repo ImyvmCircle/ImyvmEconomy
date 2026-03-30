@@ -4,21 +4,20 @@ import com.imyvm.economy.EconomyMod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 
-import static net.minecraft.server.command.CommandManager.literal;
-import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.commands.Commands.literal;
+import static net.minecraft.commands.Commands.argument;
 
 public class CommandRegistry {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess, Commands.CommandSelection environment) {
+        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(
             literal("balance")
-                .requires(ServerCommandSource::isExecutedByPlayer)
-                .requires(source -> Permissions.check(source, EconomyMod.MOD_ID + ".balance", true))
+                .requires(CommandSourceStack::isPlayer)
+                .requires(source -> true)
                 .executes(new BalanceCommand()));
 
         dispatcher.register(literal("bal").redirect(node));
@@ -26,35 +25,35 @@ public class CommandRegistry {
 
         dispatcher.register(
             literal("pay")
-                .requires(ServerCommandSource::isExecutedByPlayer)
-                .requires(source -> Permissions.check(source, EconomyMod.MOD_ID + ".pay", true))
-                .then(argument("target", EntityArgumentType.player())
+                .requires(CommandSourceStack::isPlayer)
+                .requires(source -> true)
+                .then(argument("target", EntityArgument.player())
                     .then(argument("amount", DoubleArgumentType.doubleArg(0))
                         .executes(new PayCommand()))));
 
         WalletCommand walletCommand = new WalletCommand();
         dispatcher.register(
             literal("wallet")
-                .requires(source -> Permissions.check(source, EconomyMod.MOD_ID + ".wallet", 2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(literal("add")
-                    .then(argument("player", EntityArgumentType.player())
+                    .then(argument("player", EntityArgument.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
                             .executes(walletCommand::runAddMoney))))
                 .then(literal("take")
-                    .then(argument("player", EntityArgumentType.player())
+                    .then(argument("player", EntityArgument.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
                             .executes(walletCommand::runTakeMoney))))
                 .then(literal("set")
-                    .then(argument("player", EntityArgumentType.player())
+                    .then(argument("player", EntityArgument.player())
                         .then(argument("amount", DoubleArgumentType.doubleArg(0))
                             .executes(walletCommand::runSetMoney))))
                 .then(literal("get")
-                    .then(argument("player", EntityArgumentType.player())
+                    .then(argument("player", EntityArgument.player())
                         .executes(walletCommand))));
 
         dispatcher.register(
             literal("balance_top")
-                .requires(source -> Permissions.check(source, EconomyMod.MOD_ID + ".balance_top", true))
+                .requires(source -> true)
                 .executes(new BalanceTopCommand()));
     }
 }

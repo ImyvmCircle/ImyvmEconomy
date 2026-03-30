@@ -4,9 +4,9 @@ import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -19,7 +19,7 @@ public class BalanceTopCommand extends BaseCommand {
     public final int MAX_TOP_PLAYERS = 16;
 
     @Override
-    public int run(CommandContext<ServerCommandSource> context) {
+    public int run(CommandContext<CommandSourceStack> context) {
         PriorityQueue<PlayerData> heap = new PriorityQueue<>(Comparator.comparing(PlayerData::getMoney));
         for (PlayerData player : EconomyMod.data.peekPlayers()) {
             heap.add(player);
@@ -30,14 +30,14 @@ public class BalanceTopCommand extends BaseCommand {
         PlayerData[] topPlayers = heap.toArray(new PlayerData[0]);
         Arrays.sort(topPlayers, Comparator.comparing(PlayerData::getMoney).reversed());
 
-        MutableText text = (MutableText) tr("commands.balance_top.header");
+        MutableComponent text = (MutableComponent) tr("commands.balance_top.header");
         int index = 0;
         for (PlayerData player : topPlayers) {
             ++index;
             text.append("\n").append(tr("commands.balance_top.item", index, player.getName(), player.getMoneyFormatted()));
         }
-        Supplier<Text> textSupplier = () -> text;
-        context.getSource().sendFeedback(textSupplier, false);
+        Supplier<Component> textSupplier = () -> text;
+        context.getSource().sendSuccess(textSupplier, false);
 
         return Command.SINGLE_SUCCESS;
     }

@@ -7,31 +7,31 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
 
 import static com.imyvm.economy.Translator.tr;
 
 public class PayCommand extends BaseCommand {
     @Override
-    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity source = context.getSource().getPlayer();
+    public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ServerPlayer source = context.getSource().getPlayer();
 
-        ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+        ServerPlayer target = EntityArgument.getPlayer(context, "target");
         long amount = (long) (DoubleArgumentType.getDouble(context, "amount") * 100);
 
         PlayerData sourceData = EconomyMod.data.getOrCreate(source);
         PlayerData targetData = EconomyMod.data.getOrCreate(target);
 
         if (amount > sourceData.getMoney()) {
-            source.sendMessage(tr("commands.pay.failed.lack"));
+            source.sendSystemMessage(tr("commands.pay.failed.lack"));
             return -1;
         }
 
         String formattedAmount = MoneyUtil.format(amount);
-        source.sendMessage(tr("commands.pay.success.sender", formattedAmount, target.getName()));
-        target.sendMessage(tr("commands.pay.success.receiver", formattedAmount, source.getName()));
+        source.sendSystemMessage(tr("commands.pay.success.sender", formattedAmount, target.getName()));
+        target.sendSystemMessage(tr("commands.pay.success.receiver", formattedAmount, source.getName()));
 
         sourceData.addMoney(-amount);
         targetData.addMoney(amount);

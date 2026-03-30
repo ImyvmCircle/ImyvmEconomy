@@ -4,19 +4,19 @@ import com.imyvm.economy.EconomyMod;
 import com.imyvm.economy.PlayerData;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
 import static com.imyvm.economy.Translator.tr;
 
 public class BalanceCommand extends BaseCommand {
     @Override
-    public int run(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
+    public int run(CommandContext<CommandSourceStack> context) {
+        ServerPlayer player = context.getSource().getPlayer();
 
         PlayerData data = EconomyMod.data.getOrCreate(player);
         String formattedAmount = data.getMoneyFormatted();
-        player.sendMessage(tr("commands.balance", formattedAmount));
+        player.sendSystemMessage(tr("commands.balance", formattedAmount));
 
         return Command.SINGLE_SUCCESS;
     }

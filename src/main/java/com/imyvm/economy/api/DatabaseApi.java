@@ -2,7 +2,7 @@ package com.imyvm.economy.api;
 
 import com.imyvm.economy.Database;
 import com.imyvm.economy.EconomyMod;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class DatabaseApi {
     }
 
     @NotNull
-    public PlayerWallet getPlayer(@NotNull PlayerEntity player) {
+    public PlayerWallet getPlayer(@NotNull Player player) {
         Objects.requireNonNull(player);
         return new PlayerWallet(player, this.database.getOrCreate(player));
     }
